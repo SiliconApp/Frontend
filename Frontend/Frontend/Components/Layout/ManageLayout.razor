@@ -14,5 +14,23 @@
 </section>
 
 
+@code{
+    [CascadingParameter]
+    private ApplicationUser user { get; set; } = default!;
+
+    [CascadingParameter]
+    private HttpContext httpContext {get; set;} = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadUserDataAsync();
+    }
+
+    protected async Task LoadUserDataAsync()
+    {
+        user = await UserManager.GetUserAsync(httpContext.User) ?? null!;
+    }
+}
+
 
 
